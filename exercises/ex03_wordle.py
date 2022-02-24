@@ -24,7 +24,7 @@ def emojified(guess: str, secret: str) -> str:
     index: int = 0
     output: str = ""
     while index < len(secret):
-        if guess[index] == secret[index]:
+        if guess[index] == secret[index] and contains_char(guess, secret[index]):
             output = output + GREEN_BOX
             # if the index of the word is in the correct spot of the correct word, it will put the green box emoji
         else:
@@ -42,3 +42,38 @@ def emojified(guess: str, secret: str) -> str:
                 # if one of the letters guessed is not in the word, it will put a white box
         index = index + 1
     return output
+
+
+def input_guess(expected_length: int) -> str:
+    """Enter a guess and determine if it is of a correct length."""
+    valid_guess: bool = False
+    word = input("Enter a " + str(expected_length) + " character word: ")
+    while valid_guess is not True:
+        if len(word) == expected_length:
+            valid_guess = True
+        else:
+            word = input("That wasn't " + str(expected_length) + " chars! Try again: ")
+    return word
+
+
+def main() -> None:
+    """The entrypoint of the program and main game loop."""
+    codes: str = "codes"
+    won: bool = False
+    guesses: int = 1
+    while won is not True and guesses <= 6:
+        print("=== Turn " + str(guesses) + "/6 ===")
+        user_input: str = input_guess(5)
+        print(emojified(user_input, codes))
+        if user_input == codes:
+            won = True
+        else:
+            guesses = guesses + 1
+    if won is True:
+        print("You won in " + str(guesses) + "/6 turns!")
+    else:
+        print("X/6 - Sorry, try again tomorrow!")
+
+
+if __name__ == "__main__":
+    main()
