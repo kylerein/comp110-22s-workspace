@@ -91,3 +91,12 @@ def count(given: list[str]) -> dict[str, int]:
         else:
             result[item] = 1
     return result
+
+
+def average(given: list[str]) -> float:
+    """Given list of values, converts data to integers and produces average."""
+    result: float = 0.0
+    for number in given:
+        result += int(number)
+    result = result / len(given)
+    return result
